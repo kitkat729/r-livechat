@@ -57,7 +57,6 @@ class ChatPane extends React.Component {
         inputText: ''
       });
 
-      console.log(this.state);
     });
   }
 
@@ -84,7 +83,7 @@ function ChatLog(props) {
 
 function ChatLogMessage(props) {
   let logMessageClassName = "chat-log-message " + props.message.type;
-  
+
   return (
     <div className={logMessageClassName} title={props.message.time}>
       <span className="sender">{props.message.from}</span>: {props.message.value}
