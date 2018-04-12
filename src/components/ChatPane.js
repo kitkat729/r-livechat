@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class ChatPane extends React.Component {
   constructor(props) {
@@ -31,25 +32,22 @@ class ChatPane extends React.Component {
       value: this.state.inputText,
       from: this.props.user.id,
       to: 'party id',
-      id: null,
-      timestamp: null
     }
 
     let submit = new Promise((resolve, reject) => {
       console.log('submit=', message);
 
-      // this should be returned from the server
-      var resp = {
-        id: 'asldfjalsd', // message id
-        timestamp: 'timestamp', // message timestamp
+      var serverResp = {
+        //id: 'asldfjalsd', // @todo figure out if a server message id is needed
+        timestamp: moment.utc().format()  // 2018-04-12T02:47:07
       }
 
-      resolve(resp);
+      resolve(serverResp);
     });
 
     submit.then(resp => {
-      message.id = resp.id;
-      message.time = resp.timestamp;
+      message.id = ((message.from == this.props.user.id) ? message.from : message.to) + '-' + resp.timestamp;
+      message.timestamp = resp.timestamp;
 
       this.state.log.push(message);
       this.setState({
@@ -85,8 +83,10 @@ function ChatLogMessage(props) {
   let logMessageClassName = "chat-log-message " + props.message.type;
 
   return (
-    <div className={logMessageClassName} title={props.message.time}>
-      <span className="sender">{props.message.from}</span>: {props.message.value}
+    <div className={logMessageClassName}>
+      <span className="sender">{props.message.from}</span>: <time dateTime={props.message.timestamp} onMouseOver={ (e) => {
+        e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
+      }}>{props.message.value}</time>
     </div>
   )
 }
