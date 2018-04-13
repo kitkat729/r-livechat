@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PubSub from 'pubsub-js';
 
 class ChatPane extends React.Component {
   constructor(props) {
@@ -7,10 +8,24 @@ class ChatPane extends React.Component {
 
     this.state = {
       log: [],
-      inputText: ''
+      inputText: '',
+      token: null
     }
     this.handleInputTextChange = this.handleInputTextChange.bind(this);
     this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this);
+
+    if (this.props.session) {
+      // build a unique channel name (based on unique id) that will be same every time across all users
+      this.state.channel = (this.props.session.sender.id < this.props.session.recipient.id) ?
+                              this.props.session.sender.id + this.props.session.recipient.id :
+                              this.props.session.recipient.id + this.props.session.sender.id;
+
+      this.state.token = PubSub.subscribe(this.state.channel, this.subscriber.bind(this));
+    }
+  }
+
+  componentWillUnmount() {
+    !this.state.token || PubSub.unsubscribe(this.state.token);
   }
 
   handleInputTextChange (e) {
@@ -25,36 +40,46 @@ class ChatPane extends React.Component {
     this.inputTextSubmit();
   }
 
+  subscriber(channel, data) {
+    let message = data;
+    message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
+    message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
+    message.id = message.owner + '-' + message.timestamp;
+
+    this.state.log.push(message);
+    this.setState({
+      log: this.state.log,
+      inputText: ''
+    });
+  }
+
+  submit(message) {
+    return new Promise((resolve, reject) => {
+        console.log('submit=', message);
+
+        if (PubSub.publish(this.state.channel, message)) {
+          resolve(true);
+        }
+        else {
+          reject('Server did not response')
+        }
+      });
+  }
+
   inputTextSubmit() {
-    // submit to server
     var message = {
       type: 'text',
       value: this.state.inputText,
-      from: this.props.user.id,
-      to: 'party id',
+      from: this.props.session.sender.name,
+      to: this.props.session.recipient.name,
     }
 
-    let submit = new Promise((resolve, reject) => {
-      console.log('submit=', message);
+    this.submit(message)
+    .then(resp => {
 
-      var serverResp = {
-        //id: 'asldfjalsd', // @todo figure out if a server message id is needed
-        timestamp: moment.utc().format()  // 2018-04-12T02:47:07
-      }
-
-      resolve(serverResp);
-    });
-
-    submit.then(resp => {
-      message.id = ((message.from == this.props.user.id) ? message.from : message.to) + '-' + resp.timestamp;
-      message.timestamp = resp.timestamp;
-
-      this.state.log.push(message);
-      this.setState({
-        log: this.state.log,
-        inputText: ''
-      });
-
+    })
+    .catch(err => {
+      console.log('Message was not sent. Error:', err);
     });
   }
 
