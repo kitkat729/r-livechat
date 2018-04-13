@@ -27,7 +27,7 @@ var win2 = {
 }
 
 ReactDOM.render(
-    <div className="chat-app">
+    <div className="flex-container chat-app">
       <App session={win1} />
       <App session={win2} />
     </div>, document.getElementById('root'));

@@ -118,7 +118,7 @@ function ChatLog(props) {
 }
 
 function ChatLogMessage(props) {
-  let logMessageClassName = [props.message.type];
+  let logMessageClassName = ['flex-container', props.message.type];
   logMessageClassName.push(props.message.from === props.message.owner ? 'text-sent' : 'text-received');
 
   return (
