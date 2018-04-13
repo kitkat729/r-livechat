@@ -101,7 +101,7 @@ class ChatPane extends React.Component {
       <div className="chat-pane">
         <ChatLog log={this.state.log} />
         <div className="chat-input">
-          <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} onKeyPress={this.handleInputTextKeyPress} />
+          <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
         </div>
       </div>
