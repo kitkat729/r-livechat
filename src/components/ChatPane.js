@@ -9,6 +9,7 @@ class ChatPane extends React.Component {
     this.state = {
       log: [],
       inputText: '',
+      inputTextTyping: false,
       token: null,
       channel: ''
     }
@@ -33,6 +34,19 @@ class ChatPane extends React.Component {
 
   handleInputTextChange (e) {
     this.setState({inputText: e.target.value});
+
+    // Typing signal: send signal and pause X second before resuming the next signal
+    if (!this.state.inputTextTyping) {
+      const message = ['signal', 'typing', this.props.session.sender.name, this.props.session.recipient.name];
+      
+      this.submit(this.getNewMessage(...message))
+      .then(resp => {
+        this.setState({inputTextTyping: true});
+        let ms = 2000;
+        let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
+        (async () => { await wait(ms); this.setState({inputTextTyping: false}) })()
+      });
+    }
   }
 
   handleInputTextKeyPress (e) {
@@ -51,21 +65,30 @@ class ChatPane extends React.Component {
 
   subscriber(channel, data) {
     let message = JSON.parse(data);
-    message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
-    message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
-    message.id = message.owner + '-' + message.timestamp;
 
-    this.state.log.push(message);
-    this.setState({
-      log: this.state.log,
-      inputText: ''
-    });
+    switch (message.type) {
+      case 'text':
+        message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
+        message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
+        message.id = message.owner + '-' + message.timestamp;
+
+        this.state.log.push(message);
+        this.setState({
+          log: this.state.log,
+          inputText: ''
+        });
+        break;
+      case 'signal':
+        if (message.from !== this.props.session.sender.name) {
+          console.log('add typing signal to ' + this.props.session.sender.name);
+        }
+        break;
+      default:
+    }
   }
 
   submit(message) {
     return new Promise((resolve, reject) => {
-        console.log('submit=', message);
-
         if (PubSub.publish(this.state.channel, JSON.stringify(message))) {
           resolve(true);
         }
