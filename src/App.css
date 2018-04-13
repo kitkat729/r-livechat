@@ -1,28 +1,33 @@
-.App {
-  text-align: center;
+.chat-app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.chat-app .app {
+  flex: 0 1 auto;
+  justify-content: space-around;
+  width: 300px;
+  height: auto;
+  margin: auto;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.chat-app .app .chat-pane .chat-log {
+  border: 1px solid #cccccc;
+  min-height: 400px;
+  padding: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .8em;
 }
-
-.App-title {
-  font-size: 1.5em;
+.chat-app .app .chat-pane .chat-log .text {
+  display: flex;
+  flex-wrap: nowrap
 }
-
-.App-intro {
-  font-size: large;
+.chat-app .app .chat-pane .chat-log .text-sent {
+  flex-direction: row-reverse;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.chat-app .app .chat-pane .chat-log .text-received {
+  flex-direction: row;
+}
+.chat-app .app .chat-pane .chat-input {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
