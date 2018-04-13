@@ -18,6 +18,10 @@
 .app .chat-pane .chat-log .text {
   flex-flow: row nowrap
 }
+.app .chat-pane .chat-log .text + .text {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 .app .chat-pane .chat-log .text-sent {
   flex-direction: row-reverse;
 }
