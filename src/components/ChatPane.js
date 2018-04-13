@@ -68,15 +68,19 @@ class ChatPane extends React.Component {
       });
   }
 
-  inputTextSubmit() {
-    var message = {
-      type: 'text',
-      value: this.state.inputText,
-      from: this.props.session.sender.name,
-      to: this.props.session.recipient.name,
+  getNewMessage(type: 'text', value, from, to) {
+    return {
+      type: type,
+      value: value,
+      from: from,
+      to: to,
     }
+  }
 
-    this.submit(message)
+  inputTextSubmit() {
+    const message = ['text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name];
+
+    this.submit(this.getNewMessage(...message))
     .then(resp => {
 
     })
