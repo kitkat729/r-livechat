@@ -9,8 +9,10 @@ class ChatPane extends React.Component {
     this.state = {
       log: [],
       inputText: '',
-      token: null
+      token: null,
+      channel: ''
     }
+    
     this.handleInputTextChange = this.handleInputTextChange.bind(this);
     this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this);
 
@@ -41,7 +43,7 @@ class ChatPane extends React.Component {
   }
 
   subscriber(channel, data) {
-    let message = data;
+    let message = JSON.parse(data);
     message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
     message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
     message.id = message.owner + '-' + message.timestamp;
@@ -57,7 +59,7 @@ class ChatPane extends React.Component {
     return new Promise((resolve, reject) => {
         console.log('submit=', message);
 
-        if (PubSub.publish(this.state.channel, message)) {
+        if (PubSub.publish(this.state.channel, JSON.stringify(message))) {
           resolve(true);
         }
         else {
