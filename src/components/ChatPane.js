@@ -15,6 +15,7 @@ class ChatPane extends React.Component {
     
     this.handleInputTextChange = this.handleInputTextChange.bind(this);
     this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this);
+    this.handleInputTextKeyPress = this.handleInputTextKeyPress.bind(this);
 
     if (this.props.session) {
       // build a unique channel name (based on unique id) that will be same every time across all users
@@ -32,6 +33,12 @@ class ChatPane extends React.Component {
 
   handleInputTextChange (e) {
     this.setState({inputText: e.target.value});
+  }
+
+  handleInputTextKeyPress (e) {
+    if (e.key === "Enter") {
+      this.inputTextSubmit();
+    }
   }
 
   handleInputTextSubmit (e) {
@@ -94,7 +101,7 @@ class ChatPane extends React.Component {
       <div className="chat-pane">
         <ChatLog log={this.state.log} />
         <div className="chat-input">
-          <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
+          <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} onKeyPress={this.handleInputTextKeyPress} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
         </div>
       </div>
