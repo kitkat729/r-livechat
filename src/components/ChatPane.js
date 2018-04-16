@@ -147,9 +147,11 @@ function ChatLogMessage(props) {
   return (
     <div className={logMessageClassName.join(' ')}>
       <span className="avatar"></span>
-      <time dateTime={props.message.timestamp} onMouseOver={ (e) => {
+      <span className="message">
+        <time dateTime={props.message.timestamp} onMouseOver={ (e) => {
         e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
       }}>{props.message.value}</time>
+      </span>
     </div>
   )
 }
