@@ -97,6 +97,12 @@ class ChatPane extends React.Component {
           this.setState({
             logSignal: message
           });
+
+          // Self destruct signal
+          // @todo refactor this later
+          let ms = 3000;
+          let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
+          (async () => { await wait(ms); this.setState({logSignal: null}) })()
         }
         break;
       default:
