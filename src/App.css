@@ -1,4 +1,13 @@
 /* App styling */
+
+/* temporary */
+* {
+    box-sizing: border-box;
+}
+
+/* @todo Use bootstrap
+    @todo Use normalize
+*/
 .flex-container {
   display: flex;
   flex-flow: row wrap;
@@ -9,14 +18,14 @@
   font-family: Helvetica, sans-serif;
   font-size: 12px;
 }
-.app .chat-pane > * {
+.app .chat-pane > div {
   padding-left: 12px;
   padding-right: 12px;
 }
 .app .chat-pane {
   border: 1px solid #cccccc;
 }
-.app .chat-pane > * + * {
+.app .chat-pane > div + div {
   border-top: 1px solid #cccccc; /* matching chat-pane */
 }
 .app .chat-pane .chat-header-title {
