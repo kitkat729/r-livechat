@@ -43,8 +43,8 @@
 .app .chat-pane .chat-log .log-message .signal {
   border-radius: 10px;
   padding: 5px 10px;  /* left and right should = border-radius to maintain the proper margin offset with radius */
+  background-color: #cccccc;
 }
-
 .app .chat-pane .chat-log .log-message.message-received .avatar {
   background-color: blue;
   margin-right: 10px;
