@@ -18,7 +18,8 @@
 .app .chat-pane .chat-log .log-message {
   flex-flow: row nowrap
 }
-.app .chat-pane .chat-log .log-message + .log-message {
+.app .chat-pane .chat-log .log-message + .log-message,
+.app .chat-pane .chat-log .chat-log-signal {
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -36,7 +37,8 @@
   border-radius: 50%;
   flex: 0 0 auto;
 }
-.app .chat-pane .chat-log .log-message .text {
+.app .chat-pane .chat-log .log-message .text,
+.app .chat-pane .chat-log .log-message .signal {
   border-radius: 10px;
   padding: 5px 10px;  /* left and right should = border-radius to maintain the proper margin offset with radius */
 }
