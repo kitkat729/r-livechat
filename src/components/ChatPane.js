@@ -169,7 +169,7 @@ function ChatLog(props) {
   }
 
   return (
-    <div className="chat-log">
+    <div className="chat-log hide-scrollbar">
       <div className="chat-log-messages">{list}</div>
       <div className="chat-log-signal">{signal}</div>
     </div>

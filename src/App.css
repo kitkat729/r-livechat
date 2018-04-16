@@ -39,6 +39,12 @@
   height: 400px;
   overflow-y: auto;
 }
+.app .chat-pane .chat-log.hide-scrollbar {
+  /* @todo: test browser support */
+  box-sizing: border-box;
+  padding-right: calc(50px + 12px); /* where 12px = chat-pane right padding */
+  width: calc(100% + 50px);
+}
 .app .chat-pane .chat-log .log-message {
   flex-flow: row nowrap
 }
