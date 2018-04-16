@@ -22,11 +22,12 @@
   min-width: 320px;
   width: 320px;
 }
-.app .chat-pane > div {
-  padding: 8px 12px;
-}
 .app .chat-pane {
   border: 1px solid #cccccc;
+  overflow: hidden;
+}
+.app .chat-pane > div {
+  padding: 8px 12px;
 }
 .app .chat-pane > div + div {
   border-top: 1px solid #cccccc; /* matching chat-pane */
