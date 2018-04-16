@@ -70,7 +70,7 @@ class ChatPane extends React.Component {
       case 'text':
         message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
         message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
-        message.id = message.owner + '-' + message.timestamp;
+        message.id = message.owner + '-' + moment().valueOf();
 
         this.state.log.push(message);
         this.setState({
