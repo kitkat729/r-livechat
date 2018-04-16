@@ -40,19 +40,23 @@
 }
 .app .chat-pane .chat-log .log-message .avatar {
   /*display: none;*/
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
   border-radius: 50%;
   flex: 0 0 auto;
+  text-align: center;
+  vertical-align: middle;
 }
 .app .chat-pane .chat-log .log-message .text,
 .app .chat-pane .chat-log .log-message .signal {
   border-radius: 10px;
   padding: 5px 10px;  /* left and right should = border-radius to maintain the proper margin offset with radius */
-  background-color: #cccccc;
+  background-color: #eeeeee;
 }
 .app .chat-pane .chat-log .log-message.message-received .avatar {
   background-color: blue;
+  color: white;
   margin-right: 10px;
 }
 .app .chat-pane .chat-log .log-message.message-received .text {
@@ -61,6 +65,7 @@
 }
 .app .chat-pane .chat-log .log-message.message-sent .avatar {
   background-color: red;
+  color: white;
   margin-left: 10px;
 }
 .app .chat-pane .chat-log .log-message.message-sent .text {
