@@ -17,10 +17,13 @@
   margin: auto;
   font-family: Helvetica, sans-serif;
   font-size: 12px;
+
+  min-height: 480px;
+  min-width: 320px;
+  width: 320px;
 }
 .app .chat-pane > div {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 8px 12px;
 }
 .app .chat-pane {
   border: 1px solid #cccccc;
@@ -31,8 +34,6 @@
 .app .chat-pane .chat-header-title {
   text-align: center;
   font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 .app .chat-pane .chat-log {
   height: 400px;
@@ -88,8 +89,6 @@
   color: white;
 }
 .app .chat-pane .chat-input {
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 .app .chat-pane .chat-input.design1 {
   display: flex;
