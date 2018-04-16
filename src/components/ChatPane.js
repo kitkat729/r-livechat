@@ -148,8 +148,8 @@ class ChatPane extends React.Component {
           <div className="chat-header-title">{this.props.session.recipient.name}</div>
         </div>
         <ChatLog log={this.state.log} signal={this.state.logSignal}/>
-        <div className="chat-input">
-          <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
+        <div className="chat-input design1">
+          <textarea type="text" className="chat-input-text" autoFocus="true" rows="auto" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
         </div>
       </div>
