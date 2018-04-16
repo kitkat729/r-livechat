@@ -141,13 +141,13 @@ function ChatLog(props) {
 }
 
 function ChatLogMessage(props) {
-  let logMessageClassName = ['flex-container', props.message.type];
-  logMessageClassName.push(props.message.from === props.message.owner ? 'text-sent' : 'text-received');
+  let logMessageClassName = ['flex-container log-message'];
+  logMessageClassName.push(props.message.from === props.message.owner ? 'message-sent' : 'message-received');
 
   return (
     <div className={logMessageClassName.join(' ')}>
       <span className="avatar"></span>
-      <span className="message">
+      <span className={props.message.type}>
         <time dateTime={props.message.timestamp} onMouseOver={ (e) => {
         e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
       }}>{props.message.value}</time>

@@ -15,34 +15,47 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: .8em;
 }
-.app .chat-pane .chat-log .text {
+.app .chat-pane .chat-log .log-message {
   flex-flow: row nowrap
 }
-.app .chat-pane .chat-log .text .avatar {
+.app .chat-pane .chat-log .log-message + .log-message {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.app .chat-pane .chat-log .log-message.message-sent {
+  flex-direction: row-reverse;
+  margin-left: 30px;  /* where this value > width(.text-received .avatar) + any right margin and right padding */
+}
+.app .chat-pane .chat-log .log-message.message-received {
+  margin-right: 30px;  /* where this value > width(.text-sent .avatar) + any left margin and left padding */
+}
+.app .chat-pane .chat-log .log-message .avatar {
   /*display: none;*/
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  flex: 0 0 auto;
 }
-.app .chat-pane .chat-log .text-received .avatar {
+.app .chat-pane .chat-log .log-message .text {
+  border-radius: 10px;
+  padding: 5px 10px;  /* left and right should = border-radius to maintain the proper margin offset with radius */
+}
+
+.app .chat-pane .chat-log .log-message.message-received .avatar {
   background-color: blue;
   margin-right: 10px;
 }
-.app .chat-pane .chat-log .text-sent .avatar {
+.app .chat-pane .chat-log .log-message.message-received .text {
+  background-color: blue;
+  color: white;
+}
+.app .chat-pane .chat-log .log-message.message-sent .avatar {
   background-color: red;
   margin-left: 10px;
 }
-.app .chat-pane .chat-log .text + .text {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-.app .chat-pane .chat-log .text-sent {
-  flex-direction: row-reverse;
-  margin-left: 30px;  /* where this value > width(.text-received .avatar) + any right margin and right padding */
-}
-.app .chat-pane .chat-log .text-received {
-  flex-direction: row;
-  margin-right: 30px;  /* where this value > width(.text-sent .avatar) + any left margin and left padding */
+.app .chat-pane .chat-log .log-message.message-sent .text {
+  background-color: red;
+  color: white;
 }
 .app .chat-pane .chat-input {
   padding-top: 8px;
