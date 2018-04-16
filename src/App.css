@@ -65,3 +65,31 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.app .chat-pane .chat-input.design1 {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.app .chat-pane .chat-input.design1 .chat-input-text {
+  flex: 1 1 auto;
+}
+.app .chat-pane .chat-input.design1 .chat-input-text-submit {
+  flex: 0 1 50px;
+}
+
+.app .chat-pane .chat-input.design2 {
+  position: relative;
+}
+.app .chat-pane .chat-input.design2 .chat-input-text {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding-right: 60px; /* relative to submit: +10px */
+  resize: none;
+  font-family: Helvetica, sans-serif;
+  font-size: 1em;
+}
+.app .chat-pane .chat-input.design2 .chat-input-text-submit {
+  position: absolute;
+  width: 50px;
+  margin-left: -50px; /* relative to width: same */
+}
