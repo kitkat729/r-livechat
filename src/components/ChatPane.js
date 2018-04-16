@@ -143,7 +143,7 @@ class ChatPane extends React.Component {
 
   render() {
     return (
-      <div className="chat-pane">
+      <section className="chat-pane">
         <div className="chat-header">
           <div className="chat-header-title">{this.props.session.recipient.name}</div>
         </div>
@@ -152,7 +152,7 @@ class ChatPane extends React.Component {
           <textarea type="text" className="chat-input-text" autoFocus="true" rows="auto" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
         </div>
-      </div>
+      </section>
     )
   }
 }
