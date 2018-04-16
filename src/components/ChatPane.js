@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PubSub from 'pubsub-js';
+import classNames from 'classnames';
 
 class ChatPane extends React.Component {
   constructor(props) {
