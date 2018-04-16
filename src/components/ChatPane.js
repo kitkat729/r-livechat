@@ -8,6 +8,7 @@ class ChatPane extends React.Component {
 
     this.state = {
       log: [],
+      logSignal: null,
       inputText: '',
       inputTextTyping: false,
       token: null,
@@ -79,8 +80,23 @@ class ChatPane extends React.Component {
         });
         break;
       case 'signal':
-        if (message.from !== this.props.session.sender.name) {
-          console.log('add typing signal to ' + this.props.session.sender.name);
+        if (!this.state.logSignal && message.from !== this.props.session.sender.name) {
+          //console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
+
+          message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
+          message.id = message.owner + '-' + moment().valueOf();
+          
+          switch (message.value) {
+            case 'typing':
+              message.value = '...';
+              break;
+            default:
+              message.value = '';
+          }
+
+          this.setState({
+            logSignal: message
+          });
         }
         break;
       default:
@@ -122,7 +138,7 @@ class ChatPane extends React.Component {
   render() {
     return (
       <div className="chat-pane">
-        <ChatLog log={this.state.log} />
+        <ChatLog log={this.state.log} signal={this.state.logSignal}/>
         <div className="chat-input">
           <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
@@ -137,7 +153,17 @@ function ChatLog(props) {
     return <ChatLogMessage key={message.id} message={message} />
   })
 
-  return <div className="chat-log">{list}</div>
+  let signal = '';
+  if (props.signal) {
+    signal = <ChatLogMessage key={props.signal.id} message={props.signal} />
+  }
+
+  return (
+    <div className="chat-log">
+      <div className="chat-log-messages">{list}</div>
+      <div className="chat-log-signal">{signal}</div>
+    </div>
+  )
 }
 
 function ChatLogMessage(props) {
