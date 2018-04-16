@@ -19,6 +19,12 @@
 .app .chat-pane > * + * {
   border-top: 1px solid #cccccc; /* matching chat-pane */
 }
+.app .chat-pane .chat-header-title {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .app .chat-pane .chat-log {
   height: 400px;
   overflow-y: auto;

@@ -144,6 +144,9 @@ class ChatPane extends React.Component {
   render() {
     return (
       <div className="chat-pane">
+        <div className="chat-header">
+          <div className="chat-header-title">{this.props.session.recipient.name}</div>
+        </div>
         <ChatLog log={this.state.log} signal={this.state.logSignal}/>
         <div className="chat-input">
           <input type="text" className="chat-input-text" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
