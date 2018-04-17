@@ -19,6 +19,17 @@ npm install
 npm start
 ```
 
+To run, in the command prompt, type
+```
+npm start
+```
+
+To stop would be a bit tricky if you don't know it. The port connecting to localhost web server won’t die even after you close the browser tab. You have to manually free the port. On a linux machine, it means to find the PID and kill process. For example, I use ubuntu. I would do use netstat, find the entry whose local address field matches my localhost, then kill the process by the PID:
+```
+sudo netstat -ntlp
+kill -9 <PID>
+```
+
 ## The current state of development
 The project is still under development. It can be tested using the built-in npm local web server. The App initially fetches 2 static user object, Laura and Rob, assuming the data is coming from somewhere, perhaps from a buddy list. So the data is given. The App loads into two chat windows, one for Laura and one for Rob. The underlying real time messaging implementation uses pub/sub, a third party package that I found online. The pub/sub portion is a simulation of 2 remote users communicating through a virtual channel, not through an acutal server like Redis. Chat messages were not directly injected to any one application's DOM. This is to demonstrate how 2 independent App can communicate real time via a medium. The Apps do not persist or load previous messages. As soon as the webpage is closed, all the messages will be gone. 
 
