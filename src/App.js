@@ -14,7 +14,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div id={'appuser-'+this.props.session.sender.id} className="app">
         <ChatPane session={this.state.session} />
       </div>
     );
