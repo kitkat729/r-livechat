@@ -16,7 +16,6 @@ Assuming npm is in place, you need to run the following commands to setup the pr
 git clone git@github.com:kitkat729/r-livechat.git r-livechat
 cd r-livechat
 npm install
-npm start
 ```
 
 To run, in the command prompt, type
