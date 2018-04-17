@@ -12,10 +12,12 @@ This challenge is contained to one browser tab, but in real life, Laura and Rob 
 This project requires npm. [Download npm](https://www.npmjs.com/get-npm)
 
 Assuming npm is in place, you need to run the following commands to setup the project
-#> git clone git@github.com:kitkat729/r-livechat.git r-livechat
-#> cd r-livechat
-#> npm install
-#> npm start
+```
+git clone git@github.com:kitkat729/r-livechat.git r-livechat
+cd r-livechat
+npm install
+npm start
+```
 
 ## The current state of development
 The project is still under development. It can be tested using the built-in npm local web server. The App initially fetches 2 static user object, Laura and Rob, assuming the data is coming from somewhere, perhaps from a buddy list. So the data is given. The App loads into two chat windows, one for Laura and one for Rob. The underlying real time messaging implementation uses pub/sub, a third party package that I found online. The pub/sub portion is a simulation of 2 remote users communicating through a virtual channel, not through an acutal server like Redis. Chat messages were not directly injected to any one application's DOM. This is to demonstrate how 2 independent App can communicate real time via a medium. The Apps do not persist or load previous messages. As soon as the webpage is closed, all the messages will be gone. 
