@@ -18,7 +18,7 @@ cd r-livechat
 npm install
 ```
 
-To run, in the command prompt, type
+To run, type in the command prompt
 ```
 npm start
 ```
@@ -30,7 +30,7 @@ kill -9 <PID>
 ```
 
 ## The current state of development
-The project is still under development. It can be tested using the built-in npm local web server. The App initially fetches 2 static user object, Laura and Rob, assuming the data is coming from somewhere, perhaps from a buddy list. So the data is given. The App loads into two chat windows, one for Laura and one for Rob. The underlying real time messaging implementation uses pub/sub, a third party package that I found online. The pub/sub portion is a simulation of 2 remote users communicating through a virtual channel, not through an acutal server like Redis. Chat messages were not directly injected to any one application's DOM. This is to demonstrate how 2 independent App can communicate real time via a medium. The Apps do not persist or load previous messages. As soon as the webpage is closed, all the messages will be gone. 
+The project is still under development. It can be tested using the built-in npm local web server. The App initially fetches 2 static user objects, Laura and Rob, assuming the data is coming from an external source like a buddy list. So the data is given. The App loads into two chat windows, one for Laura and one for Rob. The underlying real time messaging implementation uses pub/sub, a third party package that I found online. The pub/sub portion is a simulation of 2 remote users communicating through a virtual channel, not through an acutal server like Redis. Chat messages were not directly injected to any one application's DOM. This is to demonstrate how 2 independent App can communicate real time via a medium. The Apps do not persist or load previous messages. As soon as the webpage is closed, all the messages will be gone. 
 
 ## The on-going state of development
 I am working on a Redux integrated version that extends the current version. A centralized data solution, like Redux, will provide the base support for code modularity and independent data store per Subapp. The underlying pub/sub implmentation is likely to be unchanged. Scrolling the chat log to reveal the most recent message is not in yet.
