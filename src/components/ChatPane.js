@@ -76,7 +76,6 @@ class ChatPane extends React.Component {
 
         this.state.log.push(message);
         this.setState({
-          log: this.state.log,
           inputText: ''
         });
         break;
