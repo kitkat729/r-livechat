@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import reducers from '../reducers'
+import rootReducers from '../reducers'
 import App from './App'
 
 class SubApp extends Component {
   constructor(props) {
     super(props)
-    this.store = createStore(main);
+    this.store = createStore(rootReducers);
   }
 
   render() {
