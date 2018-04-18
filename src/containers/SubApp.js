@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { main } from '../reducers/main'
-import { App } from './App'
+import reducers from '../reducers'
+import App from './App'
 
 class SubApp extends Component {
   constructor(props) {
@@ -18,3 +18,5 @@ class SubApp extends Component {
     )
   }
 }
+
+export default SubApp

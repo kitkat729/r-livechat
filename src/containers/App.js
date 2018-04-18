@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css';
 
-import ChatPane from '../components/ChatPane';
+import ChatPane from '../containers/ChatPane';
 
 class App extends Component {
   constructor (props) {
