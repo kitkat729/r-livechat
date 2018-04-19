@@ -4,15 +4,15 @@ import ChatLogMessage from './ChatLogMessage'
 import moment from 'moment'
 
 const ChatLogMessages = ({log}) => {
-    let list = log.map( message => {
-      return <ChatLogMessage key={message.id} message={message} onMouseOver={ (e) => {
-        e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
-      }} />
-    })
+  let list = log.map( message => {
+    return <ChatLogMessage key={message.id} message={message} onMouseOver={ (e) => {
+      e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
+    }} />
+  })
 
-    return (
-        <div className="chat-log-messages">{list}</div>
-    ) 
+  return (
+    <div className="chat-log-messages">{list}</div>
+  ) 
 }
 
 ChatLogMessages.propTypes = {
