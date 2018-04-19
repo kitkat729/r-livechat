@@ -159,7 +159,7 @@ class ChatPane extends Component {
     return (
       <section className="chat-pane">
         <div className="chat-header">
-          <div className="chat-header-title">{this.props.session.recipient.name}</div>
+          <div className="chat-header-title">To: {this.props.session.recipient.name}</div>
         </div>
         <div className="chat-log hide-scrollbar">
           <ChatLog />
