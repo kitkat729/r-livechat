@@ -3,15 +3,30 @@ import moment from 'moment';
 import PubSub from 'pubsub-js';
 //import classNames from 'classnames';
 
-import ChatLog from '../components/ChatLog';
+import ChatLog from './ChatLog';
+import ChatSignal from './ChatSignal'
+
+import { connect } from 'react-redux'
+import {
+  addChatMessage,
+  addChatSignal
+} from '../actions'
+
+const mapStateToProps = state => state
+const mapDispatchToProps = dispatch => ({
+  onReceiveMessage: message => {
+    dispatch(addChatMessage(message))
+  },
+  onReceiveSignal: message => {
+    dispatch(addChatSignal(message))
+  }
+})
 
 class ChatPane extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      log: [],
-      //logSignal: null,
       message: null,
       inputText: '',
       inputTextTyping: false,
@@ -31,6 +46,9 @@ class ChatPane extends Component {
 
       this.state.token = PubSub.subscribe(this.state.channel, this.subscriber.bind(this));
     }
+
+    this.receiveMessage = message => this.props.onReceiveMessage(message)
+    this.receiveSignal = message => this.props.onReceiveSignal(message)
   }
 
   componentWillUnmount() {
@@ -77,16 +95,17 @@ class ChatPane extends Component {
         message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
         message.id = message.owner + '-' + moment().valueOf();
 
-        //this.state.log.push(message);
         this.setState({
           message: message,
           inputText: ''
         });
+        this.receiveMessage(message)
+
         break;
       case 'signal':
         if (message.from !== this.props.session.sender.name) {
-          console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
-  console.log(message);
+          // console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
+
           message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
           message.id = message.owner + '-' + moment().valueOf();
           
@@ -98,16 +117,7 @@ class ChatPane extends Component {
               message.value = '';
           }
 
-          this.setState({
-            message: message
-            //logSignal: message
-          });
-
-          // Self destruct signal
-          // @todo refactor this later
-          // let ms = 3000;
-          // let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
-          // (async () => { await wait(ms); this.setState({logSignal: null}) })()
+          this.receiveSignal(message)
         }
         break;
       default:
@@ -147,12 +157,16 @@ class ChatPane extends Component {
   }
 
   render() {
+    // console.log('render chat pane')
     return (
       <section className="chat-pane">
         <div className="chat-header">
           <div className="chat-header-title">{this.props.session.recipient.name}</div>
         </div>
-        <ChatLog message={this.state.message}/>
+        <div className="chat-log hide-scrollbar">
+          <ChatLog />
+          <ChatSignal />
+        </div>
         <div className="chat-input design1">
           <textarea type="text" className="chat-input-text" autoFocus="true" rows="auto" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
@@ -162,40 +176,4 @@ class ChatPane extends Component {
   }
 }
 
-// function ChatLog(props) {
-//   let list = props.log.map( message => {
-//     return <ChatLogMessage key={message.id} message={message} />
-//   })
-
-//   let signal = '';
-//   if (props.signal) {
-//     signal = <ChatLogMessage key={props.signal.id} message={props.signal} />
-//   }
-
-//   return (
-//     <div className="chat-log hide-scrollbar">
-//       <div className="chat-log-messages">{list}</div>
-//       <div className="chat-log-signal">{signal}</div>
-//     </div>
-//   )
-// }
-
-// function ChatLogMessage(props) {
-//   let logMessageClassNames = ['flex-container', 'log-message'];
-//   let isOwner = props.message.from === props.message.owner ? true : false;
-//   let userInitial = isOwner ? props.message.owner.charAt(0) : props.message.from.charAt(0);
-//   logMessageClassNames.push(isOwner ? 'message-sent' : 'message-received');
-
-//   return (
-//     <div className={classNames(logMessageClassNames)}>
-//       <span className="avatar">{userInitial.toUpperCase()}</span>
-//       <span className={props.message.type}>
-//         <time dateTime={props.message.timestamp} onMouseOver={ (e) => {
-//         e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
-//       }}>{props.message.value}</time>
-//       </span>
-//     </div>
-//   )
-// }
-
-export default ChatPane;
+export default connect(mapStateToProps, mapDispatchToProps)(ChatPane)
