@@ -145,7 +145,7 @@ class ChatPane extends React.Component {
     return (
       <section className="chat-pane">
         <div className="chat-header">
-          <div className="chat-header-title">{this.props.session.recipient.name}</div>
+          <div className="chat-header-title">To: {this.props.session.recipient.name}</div>
         </div>
         <ChatLog log={this.state.log} signal={this.state.logSignal}/>
         <div className="chat-input design1">
