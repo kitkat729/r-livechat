@@ -9,7 +9,7 @@ This challenge is contained to one browser tab, but in real life, Laura and Rob 
 
 ## Setup instructions
 
-This project requires npm. [Download npm](https://www.npmjs.com/get-npm)
+This project requires npm with at least node 8.11. [Download npm](https://www.npmjs.com/get-npm)
 
 Assuming npm is in place, you need to run the following commands to setup the project
 ```
