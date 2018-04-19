@@ -7,7 +7,7 @@ import App from './App'
 class SubApp extends Component {
   constructor(props) {
     super(props)
-    this.store = createStore(rootReducers);
+    this.store = createStore(rootReducers)
   }
 
   render() {
