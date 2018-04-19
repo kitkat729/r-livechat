@@ -9,7 +9,7 @@ This challenge is contained to one browser tab, but in real life, Laura and Rob 
 
 ## Setup instructions
 
-This project requires npm with at least node 8.11. [Download npm](https://www.npmjs.com/get-npm)
+This project requires npm version > 5 and node > 8 (preferably 8.11). [Download npm](https://www.npmjs.com/get-npm)
 
 Assuming npm is in place, you need to run the following commands to setup the project
 ```
@@ -17,6 +17,9 @@ git clone git@github.com:kitkat729/r-livechat.git r-livechat
 cd r-livechat
 npm install
 ```
+
+Note: For any reasons, if you run `npm install` before upgrading node > 8, you might get an error. You should remove
+the /node_modules folder, upgrade node and re-install the app using `npm install`
 
 To run, type in the command prompt
 ```
@@ -26,6 +29,12 @@ npm start
 To stop would be a bit tricky if you don't know it. The port connecting to localhost web server won’t die even after you close the browser tab. You have to manually free the port. On a linux machine, it means to find the PID and kill process. For example, I use ubuntu. I would do use netstat, find the entry whose local address field matches my localhost, then kill the process by the PID:
 ```
 sudo netstat -ntlp
+kill -9 <PID>
+```
+
+On a mac, you do the following to free the port. Run the command and locate the PID and kill the process
+```
+sudo lsof -n -i:<port>  # where <port> is the assigned localhost port
 kill -9 <PID>
 ```
 
