@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import PubSub from 'pubsub-js';
+import React, { Component } from 'react'
+import moment from 'moment'
+import PubSub from 'pubsub-js'
 //import classNames from 'classnames';
 
-import ChatLog from './ChatLog';
+import ChatLog from './ChatLog'
 import ChatSignal from './ChatSignal'
 
 import { connect } from 'react-redux'
@@ -34,17 +34,17 @@ class ChatPane extends Component {
       channel: ''
     }
     
-    this.handleInputTextChange = this.handleInputTextChange.bind(this);
-    this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this);
-    this.handleInputTextKeyPress = this.handleInputTextKeyPress.bind(this);
+    this.handleInputTextChange = this.handleInputTextChange.bind(this)
+    this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this)
+    this.handleInputTextKeyPress = this.handleInputTextKeyPress.bind(this)
 
     if (this.props.session) {
       // build a unique channel name (based on unique id) that will be same every time across all users
       this.state.channel = (this.props.session.sender.id < this.props.session.recipient.id) ?
                               this.props.session.sender.id + this.props.session.recipient.id :
-                              this.props.session.recipient.id + this.props.session.sender.id;
+                              this.props.session.recipient.id + this.props.session.sender.id
 
-      this.state.token = PubSub.subscribe(this.state.channel, this.subscriber.bind(this));
+      this.state.token = PubSub.subscribe(this.state.channel, this.subscriber.bind(this))
     }
 
     this.receiveMessage = message => this.props.onReceiveMessage(message)
@@ -52,38 +52,38 @@ class ChatPane extends Component {
   }
 
   componentWillUnmount() {
-    !this.state.token || PubSub.unsubscribe(this.state.token);
+    !this.state.token || PubSub.unsubscribe(this.state.token)
   }
 
   handleInputTextChange (e) {
-    this.setState({inputText: e.target.value});
+    this.setState({inputText: e.target.value})
 
     // Typing signal: send signal and pause X second before resuming the next signal
     if (!this.state.inputTextTyping) {
-      const message = ['signal', 'typing', this.props.session.sender.name, this.props.session.recipient.name];
+      const message = ['signal', 'typing', this.props.session.sender.name, this.props.session.recipient.name]
       
       this.submit(this.getNewMessage(...message))
       .then(resp => {
-        this.setState({inputTextTyping: true});
+        this.setState({inputTextTyping: true})
         let ms = 2000;
         let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
         (async () => { await wait(ms); this.setState({inputTextTyping: false}) })()
-      });
+      })
     }
   }
 
   handleInputTextKeyPress (e) {
     if (e.key === "Enter") {
-      this.inputTextSubmit();
+      this.inputTextSubmit()
     }
   }
 
   handleInputTextSubmit (e) {
     if (this.state.inputText === '') {
-      return;
+      return
     }
 
-    this.inputTextSubmit();
+    this.inputTextSubmit()
   }
 
   subscriber(channel, data) {
@@ -93,7 +93,7 @@ class ChatPane extends Component {
       case 'text':
         message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
         message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
-        message.id = message.owner + '-' + moment().valueOf();
+        message.id = message.owner + '-' + moment().valueOf()
 
         this.receiveMessage(message)
 
@@ -102,15 +102,15 @@ class ChatPane extends Component {
         if (message.from !== this.props.session.sender.name) {
           // console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
 
-          message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
-          message.id = message.owner + '-' + moment().valueOf();
+          message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to
+          message.id = message.owner + '-' + moment().valueOf()
           
           switch (message.value) {
             case 'typing':
-              message.value = '...';
-              break;
+              message.value = '...'
+              break
             default:
-              message.value = '';
+              message.value = ''
           }
 
           this.receiveSignal(message)
@@ -122,13 +122,13 @@ class ChatPane extends Component {
 
   submit(message) {
     return new Promise((resolve, reject) => {
-        if (PubSub.publish(this.state.channel, JSON.stringify(message))) {
-          resolve(true);
-        }
-        else {
-          reject('Server did not response')
-        }
-      });
+      if (PubSub.publish(this.state.channel, JSON.stringify(message))) {
+        resolve(true);
+      }
+      else {
+        reject('Server did not response')
+      }
+    })
   }
 
   getNewMessage(type: 'text', value, from, to) {
@@ -145,13 +145,13 @@ class ChatPane extends Component {
 
     this.submit(this.getNewMessage(...message))
     .then(resp => {
-        this.setState({
-          inputText: ''
-        });
+      this.setState({
+        inputText: ''
+      })
     })
     .catch(err => {
-      console.log('Message was not sent. Error:', err);
-    });
+      console.log('Message was not sent. Error:', err)
+    })
   }
 
   render() {

@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import '../App.css';
+import '../App.css'
 
-import ChatPane from '../containers/ChatPane';
+import ChatPane from '../containers/ChatPane'
 
 class App extends Component {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       session: props.session || {}
-    };
+    }
   }
 
   render() {
@@ -21,4 +21,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
