@@ -95,10 +95,6 @@ class ChatPane extends Component {
         message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
         message.id = message.owner + '-' + moment().valueOf();
 
-        this.setState({
-          message: message,
-          inputText: ''
-        });
         this.receiveMessage(message)
 
         break;
@@ -149,7 +145,9 @@ class ChatPane extends Component {
 
     this.submit(this.getNewMessage(...message))
     .then(resp => {
-
+        this.setState({
+          inputText: ''
+        });
     })
     .catch(err => {
       console.log('Message was not sent. Error:', err);
