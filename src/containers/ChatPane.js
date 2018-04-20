@@ -51,6 +51,8 @@ class ChatPane extends Component {
       this.state.token = PubSub.subscribe(this.state.channel, this.subscriber.bind(this))
     }
 
+    this.chatLogRef = React.createRef();
+
     this.receiveMessage = message => this.props.onReceiveMessage(message)
     this.receiveSignal = message => this.props.onReceiveSignal(message)
     this.destroySignal = () => this.props.onDestroySignal()
@@ -58,6 +60,10 @@ class ChatPane extends Component {
 
   componentWillUnmount() {
     !this.state.token || PubSub.unsubscribe(this.state.token)
+  }
+
+  componentDidUpdate() {
+    this.chatLogRef.current.scrollTop = this.chatLogRef.current.scrollHeight;
   }
 
   handleInputTextChange (e) {
@@ -171,7 +177,7 @@ class ChatPane extends Component {
         <div className="chat-header">
           <div className="chat-header-title">To: {this.props.session.recipient.name}</div>
         </div>
-        <div className="chat-log hide-scrollbar">
+        <div ref={this.chatLogRef} className="chat-log hide-scrollbar">
           <ChatLog />
           <ChatSignal />
         </div>
