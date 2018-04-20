@@ -1,22 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducers from '../reducers'
 import App from './App'
 
-class SubApp extends Component {
-  constructor(props) {
-    super(props)
-    this.store = createStore(rootReducers)
-  }
+import {
+  createChatApp
+} from '../actions'
 
-  render() {
-    return (
-      <Provider store={this.store}>
-        <App session={this.props.session} />
-      </Provider>
-    )
-  }
+const SubApp = (props) => {
+  let store = configureStore()
+  
+  store.dispatch(createChatApp(props.session))
+  
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 }
 
 export default SubApp

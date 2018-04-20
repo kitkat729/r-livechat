@@ -1,5 +1,10 @@
 import * as types from '../constants/actionTypes'
 
+export const createChatApp = session => ({
+  type: types.CHAT_CREATE_APP,
+  session
+})
+
 export const addChatMessage = message => ({
     type: types.CHATLOG_ADD_MESSAGE,
     message

@@ -1,24 +1,10 @@
-import React, { Component } from 'react'
-import '../App.css'
+import { connect } from 'react-redux'
+import ChatApp from '../components/ChatApp'
 
-import ChatPane from '../containers/ChatPane'
-
-class App extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      session: props.session || {}
-    }
-  }
-
-  render() {
-    return (
-      <div id={'appuser-'+this.props.session.sender.id} className="app">
-        <ChatPane session={this.state.session} />
-      </div>
-    );
+const mapStateToProps = state => {
+  return {
+    chatSession: state.chatApp.chatSession
   }
 }
 
-export default App
+export default connect(mapStateToProps)(ChatApp)
