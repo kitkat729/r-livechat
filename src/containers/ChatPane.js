@@ -63,7 +63,7 @@ class ChatPane extends Component {
   }
 
   componentDidUpdate() {
-    this.chatLogRef.current.scrollTop = this.chatLogRef.current.scrollHeight;
+
   }
 
   handleInputTextChange (e) {
@@ -97,6 +97,10 @@ class ChatPane extends Component {
     this.inputTextSubmit()
   }
 
+  scrollChatLogTo(scrollTop = 0) {
+    this.chatLogRef.current.scrollTop = scrollTop;
+  }
+
   subscriber(channel, data) {
     let message = JSON.parse(data);
 
@@ -107,6 +111,7 @@ class ChatPane extends Component {
         message.id = message.owner + '-' + moment().valueOf()
 
         this.receiveMessage(message)
+        this.scrollChatLogTo(this.chatLogRef.current.scrollHeight)
 
         break;
       case 'signal':
@@ -125,12 +130,14 @@ class ChatPane extends Component {
           }
 
           this.receiveSignal(message)
+          this.scrollChatLogTo(this.chatLogRef.current.scrollHeight)
 
           let ms = 3000;
           //console.log('signal will be self-destroyed in '+(ms/1000)+' seconds')
           let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
-          (async () => { await wait(ms); /*console.log('self-destroying signal');*/ this.destroySignal() })()
+          (async () => { await wait(ms); /*console.log('self-destroying signal');*/ this.destroySignal(); this.scrollChatLogTo(this.chatLogRef.current.scrollHeight) })()
         }
+
         break;
       default:
     }
