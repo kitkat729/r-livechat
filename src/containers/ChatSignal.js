@@ -3,7 +3,7 @@ import ChatLogSignal from '../components/ChatLogSignal'
 
 const mapStateToProps = state => {
   return {
-    signal: state.signal
+    chatSignal: state.chatSignal
   }
 }
 

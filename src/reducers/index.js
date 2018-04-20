@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import signal from './chatSignal'
 import chatLog from './chatLog'
+import chatSignal from './chatSignal'
 
 export default combineReducers({
-  signal
   chatLog,
+  chatSignal
 })

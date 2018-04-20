@@ -3,7 +3,7 @@ import {
   CHATLOG_REMOVE_SIGNAL
 } from '../constants/actionTypes'
 
-const signal = (state = null, action) => {
+const chatSignal = (state = null, action) => {
   switch (action.type) {
     case CHATLOG_ADD_SIGNAL:
       return action.message
@@ -14,4 +14,4 @@ const signal = (state = null, action) => {
   }  
 }
 
-export default signal
+export default chatSignal
