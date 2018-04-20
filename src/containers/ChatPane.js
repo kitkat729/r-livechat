@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import PubSub from 'pubsub-js'
-//import classNames from 'classnames';
 
 import ChatLog from './ChatLog'
 import ChatSignal from './ChatSignal'
@@ -14,6 +13,7 @@ import {
 } from '../actions'
 
 const mapStateToProps = state => state
+
 const mapDispatchToProps = dispatch => ({
   onReceiveMessage: message => {
     dispatch(addChatMessage(message))
@@ -60,10 +60,6 @@ class ChatPane extends Component {
 
   componentWillUnmount() {
     !this.state.token || PubSub.unsubscribe(this.state.token)
-  }
-
-  componentDidUpdate() {
-
   }
 
   handleInputTextChange (e) {
