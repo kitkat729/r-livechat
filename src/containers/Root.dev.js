@@ -1,5 +1,4 @@
 import React from 'react'
-//import ReduxDevTools from './ReduxDevTools'
 import SubApp from './SubApp'
 
 const win1 = {
