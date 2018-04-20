@@ -9,7 +9,8 @@ import ChatSignal from './ChatSignal'
 import { connect } from 'react-redux'
 import {
   addChatMessage,
-  addChatSignal
+  addChatSignal,
+  removeChatSignal
 } from '../actions'
 
 const mapStateToProps = state => state
@@ -19,6 +20,9 @@ const mapDispatchToProps = dispatch => ({
   },
   onReceiveSignal: message => {
     dispatch(addChatSignal(message))
+  },
+  onDestroySignal: () => {
+    dispatch(removeChatSignal())
   }
 })
 
@@ -49,6 +53,7 @@ class ChatPane extends Component {
 
     this.receiveMessage = message => this.props.onReceiveMessage(message)
     this.receiveSignal = message => this.props.onReceiveSignal(message)
+    this.destroySignal = () => this.props.onDestroySignal()
   }
 
   componentWillUnmount() {
@@ -114,6 +119,11 @@ class ChatPane extends Component {
           }
 
           this.receiveSignal(message)
+
+          let ms = 3000;
+          //console.log('signal will be self-destroyed in '+(ms/1000)+' seconds')
+          let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
+          (async () => { await wait(ms); /*console.log('self-destroying signal');*/ this.destroySignal() })()
         }
         break;
       default:
