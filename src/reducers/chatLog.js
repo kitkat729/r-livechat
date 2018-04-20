@@ -2,7 +2,7 @@ import {
   CHATLOG_ADD_MESSAGE
 } from '../constants/actionTypes'
 
-const log = (state = [], action) => {
+const chatLog = (state = [], action) => {
   switch (action.type) {
     case CHATLOG_ADD_MESSAGE:
       return [...state, action.message]
@@ -11,4 +11,4 @@ const log = (state = [], action) => {
   }
 }
 
-export default log
+export default chatLog

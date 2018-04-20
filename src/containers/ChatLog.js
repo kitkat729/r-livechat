@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import ChatLogMessages from '../components/ChatLogMessages'
 
 const mapStateToProps = state => ({
-  log: state.log
+  chatLog: state.chatLog
 })
 
 export default connect(mapStateToProps)(ChatLogMessages)

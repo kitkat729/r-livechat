@@ -3,8 +3,8 @@ import { PropTypes } from 'prop-types'
 import ChatLogMessage from './ChatLogMessage'
 import moment from 'moment'
 
-const ChatLogMessages = ({log}) => {
-  let list = log.map( message => {
+const ChatLogMessages = ({chatLog}) => {
+  let list = chatLog.map( message => {
     return <ChatLogMessage key={message.id} message={message} onMouseOver={ (e) => {
       e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
     }} />
@@ -16,7 +16,7 @@ const ChatLogMessages = ({log}) => {
 }
 
 ChatLogMessages.propTypes = {
-  log: PropTypes.arrayOf(
+  chatLog: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
