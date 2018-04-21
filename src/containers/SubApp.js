@@ -9,7 +9,7 @@ import {
 } from '../actions'
 
 const SubApp = (props) => {
-  let store = configureStore()
+  const store = createStore(rootReducers)
   
   store.dispatch(createChatApp(props.session))
   
