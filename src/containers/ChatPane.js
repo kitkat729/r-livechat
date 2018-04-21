@@ -31,7 +31,6 @@ class ChatPane extends Component {
     super(props);
 
     this.state = {
-      message: null,
       inputText: '',
       inputTextTyping: false,
       token: null,
