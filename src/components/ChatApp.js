@@ -1,6 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import '../App.css'
+import '../app.scss'
 import ChatPane from '../containers/ChatPane'
 
 const ChatApp = ({chatSession}) => {
