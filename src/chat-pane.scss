@@ -1,0 +1,136 @@
+
+.app {
+  .chat-pane {
+    border: 1px solid #cccccc;
+    overflow: hidden;
+
+    > div {
+      padding: 8px 12px;
+    }
+
+    > div + div {
+      border-top: 1px solid #cccccc; /* matching chat-pane */
+    }
+
+    .chat-header-title {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .chat-log {
+      height: 400px;
+      overflow-y: auto;
+
+      &.hide-scrollbar {
+        /* @todo: test browser support */
+        box-sizing: border-box;
+        padding-right: calc(50px + 12px); /* where 12px = chat-pane right padding */
+        width: calc(100% + 50px);
+      }
+
+      .log-message {
+        flex-flow: row nowrap;
+
+        .avatar {
+          /*display: none;*/
+          width: 24px;
+          height: 24px;
+          line-height: 24px;
+          border-radius: 50%;
+          flex: 0 0 auto;
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        .text,
+        .signal {
+          border-radius: 10px;
+          padding: 5px 10px;  /* left and right should = border-radius to maintain the proper margin offset with radius */
+          background-color: #eeeeee;
+          word-break: break-all;
+        }
+
+        &.message-sent {
+          flex-direction: row-reverse;
+          margin-left: 30px;  /* where this value > width(.text-received .avatar) + any right margin and right padding */
+
+          .avatar {
+            background-color: red;
+            color: white;
+            margin-left: 10px;
+          }
+
+          .text {
+            background-color: red;
+            color: white;
+          }
+        }
+
+        &.message-received {
+          flex-direction: row;
+          margin-right: 30px;  /* where this value > width(.text-sent .avatar) + any left margin and left padding */
+
+          .avatar {
+            background-color: blue;
+            color: white;
+            margin-right: 10px;
+          }
+
+          .text {
+            background-color: blue;
+            color: white;
+          }
+        }
+      }
+
+      .log-message + .log-message,
+      .chat-log-signal {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .chat-input {
+      &.design1 {
+        display: flex;
+        flex-flow: row nowrap;
+
+        .chat-input-text {
+          flex: 1 1 auto;
+          resize: none;
+          border: none;
+          outline: none;
+          overflow-y: scroll;
+          font-family: Helvetica, sans-serif;
+          font-size: 1em;
+          max-height: 250px;
+        }
+
+        .chat-input-text-submit {
+          flex: 0 1 50px;
+        }
+      }
+
+      &.design2 {
+        position: relative;
+
+        .chat-input-text {
+          width: 100%;
+          border: none;
+          outline: none;
+          padding-right: 60px; /* relative to submit: +10px */
+          resize: none;
+          font-family: Helvetica, sans-serif;
+          font-size: 1em;
+          max-height: 250px;
+        }
+
+        .chat-input-text-submit {
+          position: absolute;
+          width: 50px;
+          margin-left: -50px; /* relative to width: same */
+        }
+      }
+    }
+  }
+}
