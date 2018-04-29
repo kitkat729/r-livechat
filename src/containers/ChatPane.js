@@ -114,18 +114,24 @@ class ChatPane extends Component {
 
     switch (message.type) {
       case 'text':
-        message.timestamp = moment.utc().format(); // 2018-04-12T02:47:07
-        message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to;
-        message.id = message.owner + '-' + moment().valueOf()
+        if (message.from === this.props.session.sender.name) {
+          message.status = 'sent'
 
-        this.receiveMessage(message)
+          this.updateMessage(message)
+        }
+        else {
+          message.status = 'received'
+          message.owner = message.to
+          message.id = message.owner + '-' + moment().valueOf()
 
+          this.receiveMessage(message)
+        }
         break;
       case 'signal':
         if (message.from !== this.props.session.sender.name) {
           // console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
-
-          message.owner = (message.from === this.props.session.sender.name) ? message.from : message.to
+          message.status = 'received'
+          message.owner = message.to
           message.id = message.owner + '-' + moment().valueOf()
           
           switch (message.value) {
