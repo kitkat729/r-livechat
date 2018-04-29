@@ -50,6 +50,22 @@
           word-break: break-all;
         }
 
+        &.message-sending {
+          flex-direction: row-reverse;
+          margin-left: 30px;  /* where this value > width(.text-received .avatar) + any right margin and right padding */
+
+          .avatar {
+            background-color: red;
+            color: white;
+            margin-left: 10px;
+          }
+
+          .text {
+            background-color: gray;
+            color: white;
+          }
+        }
+
         &.message-sent {
           flex-direction: row-reverse;
           margin-left: 30px;  /* where this value > width(.text-received .avatar) + any right margin and right padding */

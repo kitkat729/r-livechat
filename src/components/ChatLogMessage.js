@@ -6,7 +6,18 @@ const ChatLogMessage = ({ message, onMouseOver }) => {
   let logMessageClassNames = ['flex-container', 'log-message']
   let isOwner = message.from === message.owner ? true : false
   let userInitial = isOwner ? message.owner.charAt(0) : message.from.charAt(0)
-  logMessageClassNames.push(isOwner ? 'message-sent' : 'message-received')
+
+  switch (message.status) {
+    case 'sending':
+      logMessageClassNames.push('message-sending')
+      break
+    case 'sent':
+      logMessageClassNames.push('message-sent')
+      break
+    case 'received':
+    default:
+      logMessageClassNames.push('message-received')
+  }
 
   return (
     <div className={classNames(logMessageClassNames)}>
