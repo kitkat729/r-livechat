@@ -57,6 +57,10 @@ class ChatPane extends Component {
     this.destroySignal = () => this.props.onDestroySignal()
   }
 
+  componentDidUpdate() {
+    this.scrollChatLogTo(this.chatLogRef.current.scrollHeight)
+  }
+
   componentWillUnmount() {
     !this.state.token || PubSub.unsubscribe(this.state.token)
   }
@@ -106,7 +110,6 @@ class ChatPane extends Component {
         message.id = message.owner + '-' + moment().valueOf()
 
         this.receiveMessage(message)
-        this.scrollChatLogTo(this.chatLogRef.current.scrollHeight)
 
         break;
       case 'signal':
@@ -125,12 +128,11 @@ class ChatPane extends Component {
           }
 
           this.receiveSignal(message)
-          this.scrollChatLogTo(this.chatLogRef.current.scrollHeight)
 
           let ms = 3000;
           //console.log('signal will be self-destroyed in '+(ms/1000)+' seconds')
           let wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
-          (async () => { await wait(ms); /*console.log('self-destroying signal');*/ this.destroySignal(); this.scrollChatLogTo(this.chatLogRef.current.scrollHeight) })()
+          (async () => { await wait(ms); /*console.log('self-destroying signal');*/ this.destroySignal() })()
         }
 
         break;
