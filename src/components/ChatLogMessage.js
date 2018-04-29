@@ -21,7 +21,7 @@ const ChatLogMessage = ({ message, onMouseOver }) => {
 
   return (
     <div className={classNames(logMessageClassNames)}>
-      <span className="avatar">{userInitial.toUpperCase()}</span>
+      <span className="avatar">{userInitial}</span>
       <span className={message.type}>
         <time dateTime={message.timestamp} onMouseOver={onMouseOver}>{message.value}</time>
       </span>
