@@ -10,6 +10,11 @@ export const addChatMessage = message => ({
     message
 })
 
+export const updateChatMessage = message => ({
+    type: types.CHATLOG_UPDATE_MESSAGE,
+    message
+})
+
 export const addChatSignal = message => ({
     type: types.CHATLOG_ADD_SIGNAL,
     message
