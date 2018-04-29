@@ -8,6 +8,7 @@ import ChatSignal from './ChatSignal'
 import { connect } from 'react-redux'
 import {
   addChatMessage,
+  updateChatMessage,
   addChatSignal,
   removeChatSignal
 } from '../actions'
@@ -15,6 +16,12 @@ import {
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
+  onUpdateMessage: message => {
+    dispatch(updateChatMessage(message))
+  },
+  onSendMessage: message => {
+    dispatch(addChatMessage(message))
+  },
   onReceiveMessage: message => {
     dispatch(addChatMessage(message))
   },
@@ -52,6 +59,8 @@ class ChatPane extends Component {
 
     this.chatLogRef = React.createRef();
 
+    this.sendMessage = message => this.props.onSendMessage(message)
+    this.updateMessage = message => this.props.onUpdateMessage(message)
     this.receiveMessage = message => this.props.onReceiveMessage(message)
     this.receiveSignal = message => this.props.onReceiveSignal(message)
     this.destroySignal = () => this.props.onDestroySignal()
@@ -161,13 +170,21 @@ class ChatPane extends Component {
   }
 
   inputTextSubmit() {
-    const message = ['text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name];
+    const message = this.getNewMessage('text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name);
 
-    this.submit(this.getNewMessage(...message))
+    message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
+    message.status = 'sending'
+    message.owner = message.from 
+    message.id = message.owner + '-' + moment().valueOf()
+
+    this.sendMessage(message)
+    this.setState({
+      inputText: ''
+    })
+
+    this.submit(message)
     .then(resp => {
-      this.setState({
-        inputText: ''
-      })
+
     })
     .catch(err => {
       console.log('Message was not sent. Error:', err)
