@@ -20,7 +20,6 @@ ChatLogMessages.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
-      owner: PropTypes.string.isRequired,
       from: PropTypes.string.isRequired,
       to: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,

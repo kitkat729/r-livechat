@@ -4,19 +4,21 @@ import classNames from 'classnames'
 
 const ChatLogMessage = ({ message, onMouseOver }) => {
   let logMessageClassNames = ['flex-container', 'log-message']
-  let isOwner = message.from === message.owner ? true : false
-  let userInitial = isOwner ? message.owner.charAt(0) : message.from.charAt(0)
+  let userInitial
 
   switch (message.status) {
     case 'sending':
       logMessageClassNames.push('message-sending')
+      userInitial = message.from.charAt(0)
       break
     case 'sent':
       logMessageClassNames.push('message-sent')
+      userInitial = message.from.charAt(0)
       break
     case 'received':
     default:
       logMessageClassNames.push('message-received')
+      userInitial = message.from.charAt(0)
   }
 
   return (
@@ -33,7 +35,6 @@ ChatLogMessage.propTypes = {
   message: PropTypes.shape({
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    owner: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     to: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
