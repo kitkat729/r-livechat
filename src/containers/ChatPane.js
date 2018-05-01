@@ -166,7 +166,7 @@ class ChatPane extends Component {
         }
         else {
           message.status = 'received'
-          message.id = message.to + '-' + moment().valueOf()
+          message.id = message.to + '-' + moment().valueOf() + '-' + Math.random().toString(36).slice(2)
 
           this.receiveMessage(message)
         }
@@ -175,7 +175,7 @@ class ChatPane extends Component {
         if (message.from !== this.props.session.sender.name) {
           // console.log('add signal to ' + this.props.session.sender.name + ' chat pane');
           message.status = 'received'
-          message.id = message.to + '-' + moment().valueOf()
+          message.id = message.to + '-' + moment().valueOf() + '-' + Math.random().toString(36).slice(2)
           
           switch (message.value) {
             case 'typing':
@@ -223,7 +223,7 @@ class ChatPane extends Component {
 
     message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
     message.status = 'sending'
-    message.id = message.from + '-' + moment().valueOf()
+    message.id = message.from + '-' + moment().valueOf() + '-' + Math.random().toString(36).slice(2)
 
     this.sendMessage(message)
     this.setState({
