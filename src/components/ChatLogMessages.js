@@ -6,7 +6,7 @@ import moment from 'moment'
 const ChatLogMessages = ({chatLog}) => {
   let list = chatLog.map( message => {
     return <ChatLogMessage key={message.id} message={message} onMouseOver={ (e) => {
-      e.target.setAttribute('title', moment.utc(e.target.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
+      e.currentTarget.setAttribute('title', moment.utc(e.currentTarget.getAttribute('datetime'), "YYYY-MM-DDTHH:mm:ss").fromNow());
     }} />
   })
 
