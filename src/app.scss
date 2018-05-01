@@ -10,7 +10,7 @@
 
   min-height: 480px;
   min-width: 320px;
-  width: 320px;
+  width: $app-sm-width;
 }
 
 @import "./chat-pane.scss"
