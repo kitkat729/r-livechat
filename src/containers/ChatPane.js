@@ -113,6 +113,7 @@ class ChatPane extends Component {
     let message = JSON.parse(data);
 
     switch (message.type) {
+      case 'media.image':
       case 'text':
         if (message.from === this.props.session.sender.name) {
           message.status = 'sent'
