@@ -174,7 +174,7 @@ class ChatPane extends Component {
   }
 
   inputTextSubmit() {
-    const message = this.getNewMessage('text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name);
+    let message = this.getNewMessage('text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name);
 
     message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
     message.status = 'sending'
