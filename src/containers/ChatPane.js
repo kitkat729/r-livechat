@@ -13,6 +13,9 @@ import {
   removeChatSignal
 } from '../actions'
 
+import DropZoneWrapper from './DropZoneWrapper'
+import _ from 'lodash'
+
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
@@ -44,9 +47,12 @@ class ChatPane extends Component {
       channel: ''
     }
     
+    this.uploadFileTypes = ["image/*"]
+
     this.handleInputTextChange = this.handleInputTextChange.bind(this)
     this.handleInputTextSubmit = this.handleInputTextSubmit.bind(this)
     this.handleInputTextKeyPress = this.handleInputTextKeyPress.bind(this)
+    this.handleDrop = this.handleDrop.bind(this)
 
     if (this.props.session) {
       // build a unique channel name (based on unique id) that will be same every time across all users
@@ -103,6 +109,44 @@ class ChatPane extends Component {
     }
 
     this.inputTextSubmit()
+  }
+
+  handleDrop (acceptedFiles, rejectedFiles) {
+    // console.log('chatpane has accepted=%o', acceptedFiles)
+    // console.log('chatpane has rejected=%o', rejectedFiles)
+
+    _.each(acceptedFiles, file => {
+      //console.log(file)
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        let message = this.getNewMessage('media.image', reader.result, this.props.session.sender.name, this.props.session.recipient.name);
+
+        message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
+        message.status = 'sending'
+        message.id = message.from + '-' + moment().valueOf() + '-' + Math.random().toString(36).slice(2)
+
+        this.sendMessage(message)
+
+        this.submit(message)
+        .then(resp => {
+
+        })
+        .catch(err => {
+          console.log('Message was not sent. Error:', err)
+        })       
+      }
+
+      reader.onerror = () => {
+        console.log('Reading encountered an error')
+      }
+
+      reader.onabort = () => {
+        console.log('Reading aborted.')
+      }
+
+      reader.readAsDataURL(file)
+    })
   }
 
   scrollChatLogTo(scrollTop = 0) {
@@ -202,10 +246,12 @@ class ChatPane extends Component {
         <div className="chat-header">
           <div className="chat-header-title">To: {this.props.session.recipient.name}</div>
         </div>
-        <div ref={this.chatLogRef} className="chat-log hide-scrollbar">
-          <ChatLog />
-          <ChatSignal />
-        </div>
+        <DropZoneWrapper fileTypes={this.uploadFileTypes} onDrop={this.handleDrop}>
+          <div ref={this.chatLogRef} className="chat-log hide-scrollbar">
+            <ChatLog />
+            <ChatSignal />
+          </div>
+        </DropZoneWrapper>
         <div className="chat-input design1">
           <textarea type="text" className="chat-input-text" autoFocus="true" rows="auto" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
           <button type="button" className="chat-input-text-submit" onClick={this.handleInputTextSubmit}>Send</button>
