@@ -8,7 +8,7 @@ const chatLog = (state = [], action) => {
     case CHATLOG_ADD_MESSAGE:
       return [...state, action.message]
     case CHATLOG_UPDATE_MESSAGE:
-      return state.map(message => ( message.timestamp === action.message.timestamp ? action.message : message))
+      return state.map(message => ( message.id === action.message.id ? action.message : message))
     default:
       return state
   }
