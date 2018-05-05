@@ -13,6 +13,8 @@ import {
   removeChatSignal
 } from '../actions'
 
+import SendImageButton from './SendImageButton'
+
 const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => ({
@@ -41,7 +43,8 @@ class ChatPane extends Component {
       inputText: '',
       inputTextTyping: false,
       token: null,
-      channel: ''
+      channel: '',
+      inputImageData: ''
     }
     
     this.handleInputTextChange = this.handleInputTextChange.bind(this)
@@ -64,6 +67,8 @@ class ChatPane extends Component {
     this.receiveMessage = message => this.props.onReceiveMessage(message)
     this.receiveSignal = message => this.props.onReceiveSignal(message)
     this.destroySignal = () => this.props.onDestroySignal()
+
+    this.handleImageUpload = this.handleImageUpload.bind(this)
   }
 
   componentDidUpdate() {
@@ -98,7 +103,7 @@ class ChatPane extends Component {
   }
 
   handleInputTextSubmit (e) {
-    if (this.state.inputText === '') {
+    if (this.state.inputText === '' && this.state.inputImageData === '') {
       return
     }
 
@@ -115,6 +120,7 @@ class ChatPane extends Component {
     switch (message.type) {
       case 'media.image':
       case 'text':
+      case 'image':
         if (message.from === this.props.session.sender.name) {
           message.status = 'sent'
 
@@ -175,24 +181,59 @@ class ChatPane extends Component {
   }
 
   inputTextSubmit() {
-    let message = this.getNewMessage('text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name);
+    if (this.state.inputText) {
+      let message = this.getNewMessage('text', this.state.inputText, this.props.session.sender.name, this.props.session.recipient.name);
 
-    message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
-    message.status = 'sending'
-    message.id = message.from + '-' + moment().valueOf()
+      message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
+      message.status = 'sending'
+      message.id = message.from + '-' + moment().valueOf()
 
-    this.sendMessage(message)
-    this.setState({
-      inputText: ''
-    })
+      this.sendMessage(message)
+      this.setState({
+        inputText: ''
+      })
 
-    this.submit(message)
-    .then(resp => {
+      this.submit(message)
+      .then(resp => {
 
-    })
-    .catch(err => {
-      console.log('Message was not sent. Error:', err)
-    })
+      })
+      .catch(err => {
+        console.log('Message was not sent. Error:', err)
+      })
+    }
+    if (this.state.inputImageData) {
+       let message = this.getNewMessage('image', this.state.inputImageData, this.props.session.sender.name, this.props.session.recipient.name);
+
+      message.timestamp = moment.utc().format() // 2018-04-12T02:47:07
+      message.status = 'sending'
+      message.id = message.from + '-' + moment().valueOf()
+
+      this.sendMessage(message)
+      this.setState({
+        inputImageData: ''
+      })
+
+      this.submit(message)
+      .then(resp => {
+
+      })
+      .catch(err => {
+        console.log('Message was not sent. Error:', err)
+      })     
+    }
+  }
+
+  handleImageUpload(files) {
+    const file = files[0]
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      this.setState({
+        inputImageData: e.target.result
+      })
+    }
+
+    reader.readAsDataURL(file)
   }
 
   render() {
@@ -205,6 +246,9 @@ class ChatPane extends Component {
         <div ref={this.chatLogRef} className="chat-log hide-scrollbar">
           <ChatLog />
           <ChatSignal />
+        </div>
+        <div>
+          <SendImageButton fileHandler={this.handleImageUpload} />
         </div>
         <div className="chat-input design1">
           <textarea type="text" className="chat-input-text" autoFocus="true" rows="auto" placeholder='Type...' value={this.state.inputText} onChange={this.handleInputTextChange} />
