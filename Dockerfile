@@ -9,7 +9,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # Add any system deps...
 
 # install and cache packages
-COPY package.json /usr/src/app/
+COPY package*.json /usr/src/app/
 RUN npm install
 
 # start app
